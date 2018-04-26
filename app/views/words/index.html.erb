@@ -1,0 +1,14 @@
+<%= form_tag('/words') do %>
+  <%= label_tag(:rack, 'Search for') %>
+  <%= text_field_tag(:rack) %>
+  <%= submit_tag('Search') %>
+<% end %>
+
+<% unless @words.empty? %>
+<table>
+  <th><td>word</td><td>score</td></th>
+  <% for word in @words %>
+    <tr><td><%= word.original %></td><td><%= word.score %></td></tr>
+  <% end %>
+</table>
+<% end %>
