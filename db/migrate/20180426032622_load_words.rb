@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LoadWords < ActiveRecord::Migration[5.2]
   def change
     File.open('/usr/share/dict/words')

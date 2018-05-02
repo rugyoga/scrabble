@@ -1,3 +1,5 @@
+<h1>Scrabble</h1>
+
 <%= form_tag('/words') do %>
   <%= label_tag(:rack, 'Search for') %>
   <%= text_field_tag(:rack) %>
@@ -5,10 +7,24 @@
 <% end %>
 
 <% unless @words.empty? %>
+<h4>Results</h4>
+<style>
+.score { width: 100px; text-align: center; }
+.words { width: 700px; text-align: left; padding: 10px; }
+</style>
 <table>
-  <th><td>word</td><td>score</td></th>
-  <% for word in @words %>
-    <tr><td><%= word.original %></td><td><%= word.score %></td></tr>
+  <tr><th>score</th><th align='left'>words</th></tr>
+  <% for score, words in @words.group_by(&:score) %>
+    <tr>
+      <td class="score">
+        <%= score %>
+      </td>
+      <td class="words">
+        <% words.sort.each do |word| %>
+          <%= link_to(word.original, word.url) %>
+        <% end %>
+      </td>
+    </tr>
   <% end %>
 </table>
 <% end %>

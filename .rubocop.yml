@@ -1,0 +1,15 @@
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+Metrics/LineLength:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/MixinUsage:
+  Exclude:
+    - 'bin/*'
