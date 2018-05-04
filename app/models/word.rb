@@ -5,18 +5,12 @@ require 'encoding'
 
 # Scrabble word representation
 class Word < ApplicationRecord
+  before_save do
+    self.encoding = Encoding.compute(original)
+    self.score = Score.compute(original)
+  end
+
   MAX_SIZE = 9
-
-  @@score = {}
-  @@encoding = {}
-
-  def encoding
-    @@encoding[id] ||= Encoding.compute(original)
-  end
-
-  def score
-    @@score[id] ||= Score.compute(original)
-  end
 
   def self.from_rack(rack)
     rack_encoding = Encoding.compute(rack)

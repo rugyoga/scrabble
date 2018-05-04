@@ -10,10 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_26_032622) do
+ActiveRecord::Schema.define(version: 2018_05_04_185250) do
 
   create_table "words", force: :cascade do |t|
     t.string "original"
+    t.integer "score"
+    t.integer "encoding"
   end
 
 end
