@@ -1,3 +1,5 @@
+require 'prime'
+
 class Encoding
   def self.primes
     Prime.each(101)
@@ -12,9 +14,7 @@ class Encoding
   end
 
   def self.generate_encoding_to_words
-    Word.all.each_with_object({}) do |word, map|
-      (map[word.encoding] ||= []) << word
-    end
+    Word.all.each_with_object({}) { |word, map| (map[word.encoding] ||= []) << word }
   end
 
   def self.encoding_to_words
@@ -27,11 +27,6 @@ class Encoding
 
   def self.from_rack(rack)
     rack_encoding = compute(rack)
-    encoding_to_words
-      .select { |encoding, _| (rack_encoding % encoding).zero? }
-      .values
-      .flatten
-      .sort_by(&:score)
-      .reverse
+    encoding_to_words.select { |encoding, _| (rack_encoding % encoding).zero? }.values.flatten
   end
 end

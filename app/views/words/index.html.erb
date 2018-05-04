@@ -14,7 +14,7 @@
 </style>
 <table>
   <tr><th>score</th><th align='left'>words</th></tr>
-  <% for score, words in @words.group_by(&:score) %>
+  <% for score, words in @words.group_by(&:score).sort_by(&:first).reverse %>
     <tr>
       <td class="score">
         <%= score %>
