@@ -20,7 +20,7 @@
         <%= score %>
       </td>
       <td class="words">
-        <% words.sort.each do |word| %>
+        <% words.sort_by(&:original).each do |word| %>
           <%= link_to(word.original, word.url) %>
         <% end %>
       </td>

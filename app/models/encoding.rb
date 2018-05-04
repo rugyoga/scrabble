@@ -13,20 +13,11 @@ class Encoding
     @letter_to_prime ||= Hash[letters_by_value.zip(primes)]
   end
 
-  def self.generate_encoding_to_words
-    Word.all.each_with_object({}) { |word, map| (map[word.encoding] ||= []) << word }
-  end
-
-  def self.encoding_to_words
-    @encoding_to_words ||= generate_encoding_to_words
-  end
-
   def self.compute(word)
     word.each_char.map { |letter| letter_to_prime[letter] }.reduce(&:*)
   end
 
-  def self.from_rack(rack)
-    rack_encoding = compute(rack)
-    encoding_to_words.select { |encoding, _| (rack_encoding % encoding).zero? }.values.flatten
+  def self.can_be_made_from?(rack_encoding, word_encoding)
+    (rack_encoding % word_encoding).zero?
   end
 end
