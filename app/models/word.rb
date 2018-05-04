@@ -7,12 +7,15 @@ require 'encoding'
 class Word < ApplicationRecord
   MAX_SIZE = 9
 
+  @@score = {}
+  @@encoding = {}
+
   def encoding
-    Encoding.compute(original)
+    @@encoding[id] ||= Encoding.compute(original)
   end
 
   def score
-    Score.compute(original)
+    @@score[id] ||= Score.compute(original)
   end
 
   def self.from_rack(rack)
