@@ -12,6 +12,6 @@ class Score
   end
 
   def self.score(word)
-    word.each_char.map { |letter| values[letter] }.sum
+    word.each_char.inject(0) { |sum, letter| sum + values[letter] }
   end
 end

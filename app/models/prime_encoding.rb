@@ -1,6 +1,5 @@
 require 'prime'
 require 'score'
-require 'pry'
 
 module PrimeEncoding
   PRIME_26 = 101
@@ -14,7 +13,7 @@ module PrimeEncoding
   end
 
   def encoding(word)
-    word.each_char.map { |letter| primes[letter] }.reduce(&:*)
+    word.each_char.inject(1) { |product, letter| product * primes[letter] }
   end
 
   def can_be_made_from?(rack_encoding, word_encoding)
