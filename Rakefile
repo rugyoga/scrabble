@@ -6,3 +6,17 @@
 require_relative 'config/application'
 
 Rails.application.load_tasks
+
+namespace :dictionary do
+  task :load => :environment do
+    File.open('/usr/share/dict/words')
+        .map(&:chomp)
+        .reject { |word| word =~ /[A-Z]/ }
+        .reject { |word| word.size < 2 || word.size > Word::MAX_SIZE }
+        .each { |word| Word.create(original: word) }
+  end
+
+  task :delete => :environment do
+    Word.delete_all
+  end
+end

@@ -1,35 +1,32 @@
 # frozen_string_literal: true
 
 require 'score'
-require 'encoding'
+require 'prime_encoding'
 
 # Scrabble word representation
 class Word < ApplicationRecord
+  extend PrimeEncoding
   MAX_SIZE = 9
 
   def score
-    Score.compute(original)
+    Score.score(original)
   end
 
   def encoding
-    Encoding.compute(original)
+    Word.encoding(original)
   end
 
-  def self.generate_encoding_cache
-    Word.all.group_by(&:encoding)
-  end
-
-  def self.encoding_cache
-    @encoding_cache ||= generate_encoding_cache
+  def self.words_by_encoding
+    @words_by_encoding ||= Word.all.group_by(&:encoding)
   end
 
   def self.from_rack(rack)
-    rack_encoding = Encoding.compute(rack)
-    encoding_cache.select { |encoding, words| Encoding.can_be_made_from?(rack_encoding, encoding) }.values.flatten
+    rack_encoding = Word.encoding(rack)
+    words_by_encoding.select { |encoding, words| Word.can_be_made_from?(rack_encoding, encoding) }.values.flatten
   end
 
   def can_be_made_from?(rack_encoding)
-    Encoding.can_be_made_from?(rack_encoding, encoding)
+    can_be_made_from?(rack_encoding, encoding)
   end
 
   def url
